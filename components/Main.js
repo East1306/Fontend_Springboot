@@ -13,7 +13,13 @@ class Main extends Component {
     }
 
     componentDidMount() {
-        this.getPhones();
+        this.apiCall = setInterval(() => {    
+          this.getPhones();
+        },2000);
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.apiCall);
     }
 
     getPhones = (() => {
@@ -50,7 +56,8 @@ class Main extends Component {
                                 <Card style={styles.card}>
                                     <View style={{ alignItems: "center", padding: 5 }}>
                                         <Image
-                                            source={{ uri: item.url }} // Đường dẫn của hình ảnh
+                                            // to avoid: source.uri should bot be an empty string
+                                            source={{ uri: item.url == null ? '' : item.url }} // Đường dẫn của hình ảnh
                                             style={{ width: 80, height: 100 }} // Kích thước của hình ảnh
                                         />
                                     </View>

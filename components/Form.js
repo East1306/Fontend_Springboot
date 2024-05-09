@@ -5,10 +5,13 @@ import { View, TextInput, TouchableOpacity, StyleSheet, Text, Alert } from 'reac
 import { useRoute } from '@react-navigation/native';
 
 export default function AddDeviceForm() {
-  const [_deviceName, setDeviceName] = useState('');
-  const [_price, setPrice] = useState('');
-  const [_quantity, setQuantity] = useState('');
-  const [_imageUrl, setImageUrl] = useState('');
+  const route = useRoute();
+  const { id, name, price, quantity, url } = route.params;
+
+  const [_deviceName, setDeviceName] = useState(name);
+  const [_price, setPrice] = useState(price);
+  const [_quantity, setQuantity] = useState(quantity);
+  const [_imageUrl, setImageUrl] = useState(url);
 
   const showAlert = () => {
     Alert.alert(
@@ -23,7 +26,7 @@ export default function AddDeviceForm() {
   };
 
 
-  const onAddPress = ((name_, quantity_, price_, url_) => {
+  const onAddPress = ((name_, price_, quantity_, url_) => {
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -46,7 +49,7 @@ export default function AddDeviceForm() {
   })
 
 
-  const onEditPress = ((id, name_, quantity_, price_, url_) => {
+  const onEditPress = ((id, name_, price_, quantity_, url_) => {
 
     const requestOptions = {
       method: 'PUT',
@@ -71,7 +74,7 @@ export default function AddDeviceForm() {
 
 
   const handleSubmit = () => {
-    id === 0 ? onAddPress(_deviceName, _price, _quantity, _imageUrl) : onEditPress(id,_deviceName, _price, _quantity, _imageUrl);
+    id === 0 ? onAddPress(_deviceName, _price, _quantity, _imageUrl) : onEditPress(id, _deviceName, _price, _quantity, _imageUrl);
     setDeviceName('');
     setPrice('');
     setQuantity('');
@@ -80,35 +83,35 @@ export default function AddDeviceForm() {
 
 
   const navigation = useNavigation()
-  const route = useRoute();
-  const {id, name, price, quantity, url} = route.params;
+
+
   return (
     <View style={styles.formContainer}>
       <TextInput
         style={styles.input}
         placeholder="Device"
-        value={name}
+        value={_deviceName}
         onChangeText={setDeviceName}
       />
       <TextInput
         style={styles.input}
         placeholder="Price"
-        value={price === undefined ? '' : String(price)}
+        value={_price == undefined ? '' : String(_price)}
         onChangeText={setPrice}
       />
       <TextInput
         style={styles.input}
         placeholder="Quantity"
-        value={quantity === undefined ? '' : String(quantity)}
+        value={_quantity == undefined ? '' : String(_quantity)}
         onChangeText={setQuantity}
       />
       <TextInput
         style={styles.input}
         placeholder="URL image"
-        value={url}
+        value={_imageUrl}
         onChangeText={setImageUrl}
       />
-  
+
       <TouchableOpacity style={styles.addButton} onPress={() => { handleSubmit(), navigation.navigate('Our Phones') }}>
         <Text style={styles.addButtonLabel}>Add</Text>
       </TouchableOpacity>

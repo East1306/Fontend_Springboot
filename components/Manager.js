@@ -71,12 +71,6 @@ class Manager extends Component {
     )
   };
 }
-// function onDeletePress (id) {
-//     useEffect (() => {
-//       fetch ('http://192.168.1.12:8080/api/v1/Products/' + id, {method: "DELETE"})
-//       .then (() => setStatus ('Delete succesful'))
-//     })
-// }
 
 
 export default Manager;
