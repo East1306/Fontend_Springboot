@@ -49,7 +49,7 @@ class Manager extends Component {
             <Text style={styles.cell}>{item.price}</Text>
             <Text style={styles.cell}>{item.quantity}</Text>
             <View style={styles.buttonCell}>
-              <TouchableOpacity onPress={() => navigation.navigate('Form', { id: item.id })}>
+              <TouchableOpacity onPress={() => navigation.navigate('Form', { id: item.id, name: item.name, price: item.price, quantity: item.quantity, url: item.url })}>
                 <Text style={styles.button}>Edit</Text>
               </TouchableOpacity>
             </View>

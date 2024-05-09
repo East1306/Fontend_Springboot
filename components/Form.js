@@ -5,10 +5,10 @@ import { View, TextInput, TouchableOpacity, StyleSheet, Text, Alert } from 'reac
 import { useRoute } from '@react-navigation/native';
 
 export default function AddDeviceForm() {
-  const [deviceName, setDeviceName] = useState('');
-  const [price, setPrice] = useState('');
-  const [quantity, setQuantity] = useState('');
-  const [imageUrl, setImageUrl] = useState('');
+  const [_deviceName, setDeviceName] = useState('');
+  const [_price, setPrice] = useState('');
+  const [_quantity, setQuantity] = useState('');
+  const [_imageUrl, setImageUrl] = useState('');
 
   const showAlert = () => {
     Alert.alert(
@@ -47,6 +47,7 @@ export default function AddDeviceForm() {
 
 
   const onEditPress = ((id, name_, quantity_, price_, url_) => {
+
     const requestOptions = {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
@@ -70,7 +71,7 @@ export default function AddDeviceForm() {
 
 
   const handleSubmit = () => {
-    id === 0 ? onAddPress(deviceName, price, quantity, imageUrl) : onEditPress(id,deviceName, price, quantity, imageUrl);
+    id === 0 ? onAddPress(_deviceName, _price, _quantity, _imageUrl) : onEditPress(id,_deviceName, _price, _quantity, _imageUrl);
     setDeviceName('');
     setPrice('');
     setQuantity('');
@@ -80,31 +81,31 @@ export default function AddDeviceForm() {
 
   const navigation = useNavigation()
   const route = useRoute();
-  const { id } = route.params;
+  const {id, name, price, quantity, url} = route.params;
   return (
     <View style={styles.formContainer}>
       <TextInput
         style={styles.input}
         placeholder="Device"
-        value={deviceName}
+        value={name}
         onChangeText={setDeviceName}
       />
       <TextInput
         style={styles.input}
         placeholder="Price"
-        value={price}
+        value={price === undefined ? '' : String(price)}
         onChangeText={setPrice}
       />
       <TextInput
         style={styles.input}
         placeholder="Quantity"
-        value={quantity}
+        value={quantity === undefined ? '' : String(quantity)}
         onChangeText={setQuantity}
       />
       <TextInput
         style={styles.input}
         placeholder="URL image"
-        value={imageUrl}
+        value={url}
         onChangeText={setImageUrl}
       />
   
